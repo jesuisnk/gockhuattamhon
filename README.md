@@ -1,4 +1,3 @@
-```markdown
 - Backend:
   + Mô hình cơ sở: [Simple PHP MVC Framework (Mr. Ken)](https://forum.vdevs.net/forum/threads/simple-php-mvc-framework.14963/page-1) và 1 ít đồ chơi của DorewSite =))
   + Template engine: **Twig 3.7.0**
@@ -27,4 +26,3 @@
   + Upload file **banhbao_blog.sql** lên MariaDB.
   + Cấu hình: **/configs**.
   + Trỏ tên miền về **/www** hoặc thư mục bao gồm trang web của bạn.
-```
