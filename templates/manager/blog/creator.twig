@@ -1,0 +1,48 @@
+{% if totalCategory > 0 %}
+	{% use 'layout.twig' %}
+
+	{{block('header')}}
+
+	<div class="mainblock">
+		<div class="phdr" style="font-weight: 700">
+			<i class="fa fa-pencil" aria-hidden="true"></i>
+			Viết bài mới
+		</div>
+		{{(error ? '<div class="rmenu">'~error~'</div>' : '')|raw}}
+		<form name="form" action method="post">
+			<input style="display:none" type="file" id="f" accept="image/*">
+			<div class="menu">
+				<b>
+					<i class="fa fa-gg" aria-hidden="true"></i>
+					Tiêu đề:</b>
+				<p><input class="w3-input w3-border" type="text" name="title" value="{{input['title']}}" maxlength="300" style="height:100%; width:100%"></p>
+			</div>
+			<div class="menu">
+				<b>
+					<i class="fa fa-bars"></i>
+					Chuyên mục:</b>
+				<p>
+					<select name="category" class="w3-select w3-border">
+						{% for cat in listCategory %}
+							<option value="{{cat['id']}}">{{cat['title']}}</option>
+						{% endfor %}
+					</select>
+				</p>
+			</div>
+			<div class="menu">
+				<b>
+					<i class="fa fa-newspaper-o" aria-hidden="true"></i>
+					Nội dung:</b>
+				<p>
+					{{toolbar('postText', 15)|raw}}
+				</p>
+			</div>
+			<div class="menu" style="text-align:center">
+				<input type="hidden" name="csrf_token" value="{{_SESSION['csrf_token']}}">
+				<button type="submit" class="button">Xuất bản</button>
+			</div>
+		</form>
+	</div>
+
+	{{block('footer')}}
+{% endif %}

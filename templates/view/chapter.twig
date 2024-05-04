@@ -1,0 +1,56 @@
+{% if check %}
+	{% use 'layout.twig' %}
+
+	{{block('header')}}
+
+	{{breadcrumb|raw}}
+
+	<div class="mainblock">
+		<div class="phdr">
+			<i class="fa fa-spinner fa-pulse fa-fw"></i>
+			<h1 style="display:inline;color:#fff;font-size:17px!important;font-weight:700">
+				{{title}}
+			</h1>
+		</div>
+		{% if isLogin %}
+			<div class="topmenu">
+				<span style="font-weight:700">
+					<i class="fa fa-wrench" aria-hidden="true"></i>
+					Công cụ:</span>
+				&emsp;&emsp;
+				<a href="{{url('/manager/chapter.'~chapter['id']~'/edit')}}" title="Chỉnh sửa">Chỉnh sửa</a>
+				/
+				<a href="{{url('/manager/chapter.'~chapter['id']~'/delete')}}" title="Xóa bài viết">Xóa</a>
+				/
+				<a href="{{url('/manager/blog.'~blog['id']~'/creator')}}" title="Thêm chapter">Thêm chapter</a>
+			</div>
+		{% endif %}
+		{{paging|raw}}
+		<div class="menu" style="text-align: justify;font-style:normal;padding:12px">
+			{{bbcode(chapter['content'])|raw}}
+		</div>
+		{{paging|raw}}
+		{% if ChapList['total'] > 1 %}
+			<div class="menu" style="text-align:center">
+				<select id="redirectSelect" onchange="redirectToSelectedOption()">
+					{% for chap in ChapList['get'] %}
+						<option value="/blog/{{blog['slug']}}-{{blog['id']}}/{{chap['chapter_id']}}.html" {{chap['chapter_id'] == chapter['chapter_id'] ? ' selected' : null}}>
+							{{chap['title']}}{{chap['chapter_id'] == chapter['chapter_id'] ? ' (đang đọc)' : null}}
+						</option>
+					{% endfor %}
+				</select>
+			</div>
+			<script>
+				function redirectToSelectedOption() {
+					var select = document.getElementById("redirectSelect");
+					var selectedValue = select.value;
+					if (selectedValue) {
+						window.location.href = selectedValue;
+					}
+				}
+			</script>
+		{% endif %}
+	</div>
+
+	{{block('footer')}}
+{% endif %}

@@ -1,0 +1,30 @@
+{% use 'layout.twig' %}
+
+{{block('header')}}
+
+<div class="mainblock">
+	<div class="phdr">
+		<i class="fa fa-sign-in" aria-hidden="true"></i>
+		Đăng nhập
+	</div>
+	{% if error %}
+		<div class="rmenu">{{error}}</div>
+	{% endif %}
+	<div class="menu" style="padding:2%;text-align: center;">
+		<img width="110px" src="https://i.imgur.com/7ZBCcIm.png"/>
+	</div>
+	<div class="menu" style="padding:2%;">
+		<form action="" method="post">
+			<b>Tên đăng nhập:</b><br/>
+			<input class="w3-input" id="login-nick" placeholder="Tên đăng nhập" type="text" name="username" value="" maxlength="32"/><br/>
+			<b>Mật khẩu:</b><br/>
+			<input class="w3-input" id="login-password" placeholder="Mật khẩu" type="password" name="password" maxlength="32"/><br/>
+			<input class="form-check-input" name="remember" value="1" type="checkbox"/> Ghi nhớ đăng nhập trên thiết bị này<br/>
+			<center>
+				<button type="submit" class="button">Đăng nhập</button>
+			</center>
+		</form>
+	</div>
+</div>
+
+{{block('footer')}}

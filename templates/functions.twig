@@ -1,0 +1,11 @@
+{% macro current_url() %}{% apply spaceless %}
+	{% set protocol = _SERVER.HTTPS is defined and _SERVER.HTTPS == 'on' ? 'https://' : 'http://' %}
+	{% set domain = _SERVER.HTTP_HOST %}
+	{% set path = _SERVER.REQUEST_URI %}
+	{% set query_string = _SERVER.QUERY_STRING ? '?' ~ _SERVER.QUERY_STRING : '' %}
+
+	{# URL hoàn chỉnh #}
+	{% set url = protocol ~ domain ~ path ~ query_string %}
+
+	{{ url }}
+{% endapply %}{% endmacro %}

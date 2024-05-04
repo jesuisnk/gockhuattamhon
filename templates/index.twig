@@ -1,0 +1,52 @@
+{% use 'layout.twig' %}
+
+{{block('header')}}
+
+<div class="mainblock">
+	<div class="phdr" style="font-weight:700">
+		<i class="fa fa-book" aria-hidden="true"></i>
+		{{totalBlog > 0 ? 'Mới cập nhật ('~totalBlog~')' : 'Danh sách bài viết'}}
+	</div>
+	{% if totalBlog > 0 %}
+		<style>
+			.list1 {
+				padding: 0
+			}
+		</style>
+		{% set pagingConfig = pagingConfig(totalBlog, 'page', 10) %}
+		{% set start, end, page, page_max = pagingConfig['start'], pagingConfig['end'], pagingConfig['page'], pagingConfig['page_max'] %}
+		{% set list = dbSelect_FetchAll("SELECT * FROM `blog` ORDER BY `update` DESC LIMIT "~start~", "~end) %}
+		{% for blog in list %}
+			{% set cat = dbSelect_RowData('category', 'id', blog['category']) %}
+			{% set chapterCount = dbSelect_RowCount('chapter', {'blog':blog['id'], 'operator':'='}) %}
+			<div class="search-results-list-item list1">
+				<a class="search-result" href="/blog/{{blog['slug']}}-{{blog['id']}}.html">
+					<div class="search-result-doc search-result-doc-parent">
+						<div class="search-result-doc-title">{{cat['title']}}</div>
+					</div>
+					<div class="search-result-section">
+						<i class="fa fa-angle-right" style="color:#001" aria-hidden="true"></i>
+						{{blog['title']}}
+						<div class="sub">
+							<i class="fa fa-eye" aria-hidden="true"></i>
+							{{blog['view']}}
+							lượt xem
+							{% if chapterCount > 0 %}
+								/
+								<i class="fa fa-th-list" aria-hidden="true"></i>
+								{{chapterCount}}
+								chapter
+							{% endif %}
+							/
+							<i class="fa fa-clock-o" aria-hidden="true"></i>
+							{{ago(blog['publish'])}}
+						</div>
+					</div>
+				</a>
+			</div>
+		{% endfor %}
+		{{paging('?page=', page, page_max)|raw}}
+	</div>
+{% else %}
+	<div class="menu">Hiện tại, blog chưa có bài viết nào</div>
+{% endif %}</div>{{block('footer')}}

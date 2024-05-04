@@ -1,0 +1,43 @@
+{% use 'layout.twig' %}
+
+{{block('header')}}
+
+<div class="mainblock">
+	<div class="phdr" style="font-weight:700">
+		<i class="fa fa-tachometer" aria-hidden="true"></i>
+		Bảng quản trị
+	</div>
+	{% if category > 0 %}
+	<div class="list1">
+		<i class="fa fa-pencil-square" aria-hidden="true"></i>
+		<a href="/manager/blog/creator">Viết bài mới</a>
+	</div>
+	<div class="list1">
+		<i class="fa fa-cube" aria-hidden="true"></i>
+		<a href="/manager/category/creator">Danh sách chuyên mục</a>
+	</div>
+	{% else %}
+	<div class="list1">
+		<i class="fa fa-plus-circle" aria-hidden="true"></i>
+		<a href="/manager/category/creator">Tạo chuyên mục mới</a>
+	</div>
+	{% endif %}
+</div>
+
+<div class="mainblock">
+	<div class="phdr">
+		<i class="fa fa-bar-chart" aria-hidden="true"></i>
+		Thống kê
+	</div>
+	<div class="menu">Số chuyên mục:
+		<b>{{category}}</b>
+	</div>
+	<div class="menu">Số bài viết:
+		<b>{{blog}}</b>
+	</div>
+	<div class="menu">Số chương truyện:
+		<b>{{chapter}}</b>
+	</div>
+</div>
+
+{{block('footer')}}

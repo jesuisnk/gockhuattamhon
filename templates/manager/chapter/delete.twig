@@ -1,0 +1,24 @@
+{% if total > 0 %}
+	{% use 'layout.twig' %}
+
+	{{block('header')}}
+	{{breadcrumb|raw}}
+	<div class="mainblock">
+		<div class="phdr" style="font-weight: 700">
+			<i class="fa fa-trash" aria-hidden="true"></i>
+			Dọn dẹp danh sách chương
+		</div>
+		<div class="menu" style="text-align:center">
+			<form action="" method="POST">
+				<p>
+					Bạn có chắc chắn muốn xóa chapter này khỏi danh sách chương của bài viết <a href="/blog/{{blog['slug']}}-{{blog['id']}}.html">{{blog['title']}}</a> không?
+				</p>
+				<p>
+					<button type="submit" class="button">Xác nhận</button>
+				</p>
+			</form>
+		</div>
+	</div>
+
+	{{block('footer')}}
+{% endif %}

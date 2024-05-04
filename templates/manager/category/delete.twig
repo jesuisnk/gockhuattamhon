@@ -1,0 +1,26 @@
+{% if total > 0 %}
+	{% use 'layout.twig' %}
+
+	{{block('header')}}
+	{{breadcrumb|raw}}
+	<div class="mainblock">
+		<div class="phdr" style="font-weight: 700">
+			<i class="fa fa-trash" aria-hidden="true"></i>
+			Xóa chuyên mục
+		</div>
+		<div class="menu" style="text-align:center">
+			<form action="" method="POST">
+				<p>
+					Bạn có chắc chắn muốn loại bỏ chuyên mục này khỏi blog của bạn không? 
+                    Việc này đồng nghĩa với các bài viết và chương truyện liên quan sẽ bị xóa.<br/>
+                    Chuyên mục này đang sở hữu <b>{{blog}}</b> bài viết.
+				</p>
+				<p>
+					<button type="submit" class="button">Xác nhận</button>
+				</p>
+			</form>
+		</div>
+	</div>
+
+	{{block('footer')}}
+{% endif %}

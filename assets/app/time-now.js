@@ -1,0 +1,2 @@
+function TimeNow(){var e=new Date,t=e.getDate()+"-"+(e.getMonth()+1)+"-"+e.getFullYear()+" "+(e.getHours()+":"+e.getMinutes()+":"+e.getSeconds());document.getElementById("TimeNow").innerHTML=t}
+setInterval(TimeNow, 1000);

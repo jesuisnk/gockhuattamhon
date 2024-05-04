@@ -1,0 +1,80 @@
+{% if check %}
+	{% use 'layout.twig' %}
+
+	{{block('header')}}
+
+	{{breadcrumb|raw}}
+
+	<div class="mainblock">
+		<div class="phdr">
+			<i class="fa fa-spinner fa-pulse fa-fw"></i>
+			<h1 style="display:inline;color:#fff;font-size:17px!important;font-weight:700">
+				{{title}}
+			</h1>
+		</div>
+		{% if isLogin %}
+			<div class="topmenu">
+				<span style="font-weight:700">
+					<i class="fa fa-wrench" aria-hidden="true"></i>
+					Công cụ:
+				</span>
+				&emsp;
+				<a href="{{url('/manager/blog.'~blog['id']~'/edit')}}" title="Chỉnh sửa">Chỉnh sửa</a>
+				/
+				<a href="{{url('/manager/blog.'~blog['id']~'/delete')}}" title="Xóa bài viết">Xóa</a>
+				/
+				<a href="{{url('/manager/blog.'~blog['id']~'/creator')}}" title="Thêm chapter">Thêm chapter</a>
+			</div>
+		{% endif %}
+		<div class="menu" style="text-align: justify;font-style:normal;padding:12px">
+			{{bbcode(blog['content'])|raw}}
+		</div>
+		{% if Chapter['total'] > 0 %}
+			<div class="topmenu">
+				{% if Chapter['total'] >= 5 %}
+					<a href="/blog/{{blog['slug']}}-{{blog['id']}}/{{Chapter['first']['chapter_id']}}.html" class="btn btn-default pull-left">Đọc từ đầu</a>
+					<a href="/blog/{{blog['slug']}}-{{blog['id']}}/{{Chapter['last']['chapter_id']}}.html" class="btn btn-default pull-right">Chương cuối</a>
+				{% else %}
+					<a href="/blog/{{blog['slug']}}-{{blog['id']}}/{{Chapter['first']['chapter_id']}}.html" class="btn btn-default pull-right">Xem tiếp</a>
+				{% endif %}
+				<div style="clear:both"></div>
+			</div>
+		{% endif %}
+	</div>
+
+	{% if Chapter['total'] > 0 %}
+		{% set pagingConfig = pagingConfig(Chapter['total'], 'page', 10) %}
+		{% set start, end, page, page_max = pagingConfig['start'], pagingConfig['end'], pagingConfig['page'], pagingConfig['page_max'] %}
+		{% set ChapterList = dbSelect_FetchAll("SELECT * FROM `chapter` WHERE `blog` = '"~blog['id']~"' ORDER BY `publish` ASC LIMIT "~start~", "~end) %}
+		<div class="mainblock">
+			<div class="phdr">
+				<i class="fa fa-list" aria-hidden="true"></i>
+				Danh sách chương
+			</div>
+			{% for chap in  ChapterList %}
+				<div class="list1">
+					<i class="fa fa-angle-right" aria-hidden="true"></i>
+					<a href="/blog/{{blog['slug']}}-{{blog['id']}}/{{chap['chapter_id']}}.html">
+						{{chap['title']}}
+					</a>
+				</div>
+			{% endfor %}
+			{{paging('?page=', page, page_max)|raw}}
+		</div>
+	{% endif %}
+
+	{% if  SameCategory['total'] > 3 %}
+		<div class="mainblock">
+			<div class="phdr">
+				<i class="fa fa-lightbulb-o" aria-hidden="true"></i>
+				Có thể bạn chưa đọc</div>
+			{% for post in SameCategory['list'] %}
+				<div class="list1">
+					<a href="/blog/{{post['slug']}}-{{post['id']}}.html" title="{{post['title']}}">{{post['title']}}</a>
+				</div>
+			{% endfor %}
+		</div>
+	{% endif %}
+
+	{{block('footer')}}
+{% endif %}

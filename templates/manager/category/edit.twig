@@ -1,0 +1,25 @@
+{% if total > 0 %}
+	{% use 'layout.twig' %}
+
+	{{block('header')}}
+	{{breadcrumb|raw}}
+	<div class="mainblock">
+		<div class="phdr" style="font-weight: 700">
+			<i class="fa fa-pencil" aria-hidden="true"></i>
+			Đổi tên chuyên mục
+		</div>
+		{{error ? '<div class="rmenu">'~error~'</div>' : ''}}
+		<div class="menu" style="text-align:center">
+			<form action="" method="POST">
+				<p>
+					<input placeholder="{{cat['title']}}" value="{{cat['title']}}" type="text" class="w3-input" name="title" maxlength="50" required>
+				</p>
+				<p>
+					<button type="submit" class="button">Xác nhận</button>
+				</p>
+			</form>
+		</div>
+	</div>
+
+	{{block('footer')}}
+{% endif %}

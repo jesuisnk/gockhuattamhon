@@ -1,0 +1,52 @@
+{% use 'layout.twig' %}
+
+{{block('header')}}
+
+<div class="mainblock">
+	<div class="phdr" style="font-weight: 700">
+		<i class="fa fa-plus-circle" aria-hidden="true"></i>
+		Tạo chuyên mục
+	</div>
+	{{error ? '<div class="rmenu">'~error~'</div>' : ''}}
+	<div class="menu" style="text-align:center">
+		<form action="" method="POST">
+			<p>
+				<input placeholder="Nhập tên chuyên mục..." type="text" class="w3-input" name="title" maxlength="50" required>
+			</p>
+			<p>
+				<input type="hidden" name="csrf_token" value="{{_SESSION['csrf_token']}}">
+				<button type="submit" class="button">Xác nhận</button>
+			</p>
+		</form>
+	</div>
+</div>
+{% if total > 0 %}
+	<div class="mainblock">
+		<div class="phdr" style="font-weight: 700">
+			<i class="fa fa-bars" aria-hidden="true"></i>
+			Danh sách chuyên mục
+		</div>
+		{% for cat in list %}
+			<div class="menu">
+				<div style="float:right">
+					[
+					<a href="/manager/category.{{cat['id']}}/edit">
+						<i class="fa fa-pencil" aria-hidden="true"></i>
+					</a>
+					]  [
+					<a href="/manager/category.{{cat['id']}}/delete">
+						<i class="fa fa-trash" aria-hidden="true"></i>
+					</a>
+					]
+				</div>
+				<i class="fa fa-cube" aria-hidden="true"></i>
+				<a href="/category/{{cat['slug']}}.html">
+					{{cat['title']}}
+				</a>
+				<div style="clear:both"></div>
+			</div>
+		{% endfor %}
+	</div>
+{% endif %}
+
+{{block('footer')}}

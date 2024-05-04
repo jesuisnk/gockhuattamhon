@@ -1,0 +1,23 @@
+{% if totalCategory > 0 %}
+	{% use 'layout.twig' %}
+
+	{{block('header')}}
+
+	<div class="mainblock">
+		<div class="phdr" style="font-weight:700">
+			<i class="fa fa-bars"></i>
+			Chuyên mục
+		</div>
+		{% for category in listCategory %}
+			{% set blogCount = dbSelect_RowCount('blog', {'category':category['id'], 'operator':'='}) %}
+			<div class="list1">
+				<i class="fa fa-cube" aria-hidden="true"></i>
+				<a href="/category/{{category['slug']}}.html">
+					{{category['title']}}
+				</a>
+				({{blogCount}})
+			</div>
+		{% endfor %}
+	</div>
+</div>
+{{block('footer')}}{% endif %}

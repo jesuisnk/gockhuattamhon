@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
+	<url>
+		<loc>{{(_SERVER.HTTPS is defined and _SERVER.HTTPS == 'on' ? 'https://' : 'http://')~_SERVER.HTTP_HOST}}</loc>
+	</url>
+	<url>
+		<loc>{{(_SERVER.HTTPS is defined and _SERVER.HTTPS == 'on' ? 'https://' : 'http://')~_SERVER.HTTP_HOST}}/category</loc>
+	</url>
+	{% for category in listCategory %}
+		<url>
+			<loc>{{(_SERVER.HTTPS is defined and _SERVER.HTTPS == 'on' ? 'https://' : 'http://')~_SERVER.HTTP_HOST}}/category/{{category['slug']}}.html</loc>
+		</url>
+	{% endfor %}
+    	{% for blog in dbSelect_FetchAll("SELECT * FROM `blog` ORDER BY `id` ASC") %}
+		<url>
+			<loc>{{(_SERVER.HTTPS is defined and _SERVER.HTTPS == 'on' ? 'https://' : 'http://')~_SERVER.HTTP_HOST}}/blog/{{blog['slug']}}-{{blog['id']}}.html</loc>
+		</url>
+        {% for chapter in dbSelect_FetchAll("SELECT * FROM `chapter` WHERE `blog` = '"~blog['id']~"' ORDER BY `id` ASC") %}
+		<url>
+			<loc>{{(_SERVER.HTTPS is defined and _SERVER.HTTPS == 'on' ? 'https://' : 'http://')~_SERVER.HTTP_HOST}}/blog/{{blog['slug']}}-{{blog['id']}}/{{chapter['chapter_id']}}.html</loc>
+		</url>
+        {% endfor %}
+	{% endfor %}
+</urlset>

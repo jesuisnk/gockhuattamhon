@@ -1,0 +1,38 @@
+{% use 'layout.twig' %}
+
+{{block('header')}}
+
+{{breadcrumb|raw}}
+
+<style>
+	.list1 {
+		padding: 0
+	}
+</style>
+
+{% if error == null %}
+	{{result|raw}}
+	<div class="mainblock">
+		{% for blog in list %}
+			{% set cat = dbSelect_RowData('category', 'id', blog['category']) %}
+			<div class="search-results-list-item list1">
+				<a class="search-result" href="/blog/{{blog['slug']}}-{{blog['id']}}.html">
+					<div class="search-result-doc search-result-doc-parent">
+						<div class="search-result-doc-title">{{cat['title']}}</div>
+					</div>
+					<div class="search-result-section">
+						<i class="fa fa-angle-right" style="color:#001" aria-hidden="true"></i>
+						{{blog['title']}}
+					</div>
+				</a>
+			</div>
+		{% endfor %}
+		{{paging('?page=', page, page_max)|raw}}
+	</div>
+{% elseif error == 'empty' %}
+	{{alert('Nhãn cần tìm không hợp lệ','warning-title')|raw}}
+{% else %}
+	{{error|raw}}
+{% endif %}
+
+{{block('footer')}}
